@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>馆内资讯</title>
+    <link rel="stylesheet" href="../static/layui/css/layui.css">
+    <link rel="stylesheet" href="../static/css/index.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header_title"><a href="/index">智能查询系统</a></div>
+            <span class="header_date"></span>
+            <span class="week"></span>
+            <span class="time"></span>
+            <div  th:if="${session==null || session.SPRING_SECURITY_CONTEXT==null}">
+                <div class="header_user">
+                    <a href="user/login">游客:<span class="readCardNumber">请登录</span></a>
+                </div>
+            </div>
+            <div th:if="${session !=null && session.SPRING_SECURITY_CONTEXT !=null}">
+                <div class="header_user">
+                    读者证号:<span class="readCardNumber"
+                               th:text="${session.SPRING_SECURITY_CONTEXT.authentication.principal.remark}">
+                         </span>
+                    <span class="logOut"><a href="/logout">退出</a></span>
+                </div>
+            </div>
+        </div>
+        <div class="readerBookContent libNewsContent">
+            <div class="myContent_title libNew_title"><span></span>馆内资讯<span></span></div>
+            <div class="libNews">
+            </div>
+            <div class="goBack">
+                <img src="../static/images/goback.png">
+            </div>
+        </div>
+    </div>
+    <!--详情弹框-->
+    <div class="bookDetail clearfix">
+        <div class="libNew_content">
+            <div class="libNew_dialogTitle"></div>
+            <div class="libNew_dialogDate"></div>
+            <div class="libNew_dialogContent">
+            </div>
+        </div>
+        <div class="goBack2">
+            <img src="../static/images/goback.png">
+        </div>
+    </div>
+</body>
+<script id="list" type="text/html">
+    <div class="libNew" id="<%id%>">
+        <div class="libNews_left">
+            <div class="libNews_title"><%title%></div>
+            <div class="libNews_date">发布时间：<span><%createTime%></span></div>
+        </div>
+        <div class="libNewsPic"><img src="<%libNewsImg%>"></div>
+    </div>
+</script>
+<script src="../static/js/jquery-1.8.3.js"></script>
+<script src="../static/js/dateTime.js"></script>
+<script src="../static/layui/layui.js"></script>
+<script src="../static/js/tmod.js"></script>
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+        var libNew=$(".libNew");
+        var libNews=$(".libNews");
+        libNews.html("");//清空列表
+        $.ajax({
+            url:"/visitor/getlibraryNewsList",
+            method:"get",
+            dataType:"json",
+            success:function (data) {
+               if(data.data){
+                   var result=data.data.result;
+                   totalPages=data.data.totalPages-1;  //总页数
+                   currentPages=data.data.currentPages; //当前页
+                   $(".totalNum").html(totalPages);
+                   $(".nowNum").html(currentPages+1);
+                   if(result.length != 0){
+                       $(result).each(function (i,e) {
+                           result[i].index=i+1;
+                           libNews.append(template("list",result[i]));
+                       });
+                       //
+                       var libNew=$(".libNew");
+                       libNew.click(function () {
+                           var bookId=$(this).attr("id");
+                           //详情
+                           layer.open({
+                               type: 1,
+                               title: '',
+                               shadeClose: true,
+                               shade: 0.8,
+                               area: ['80%', '800px'],
+                               closeBtn: 0,
+                               content: $('.bookDetail'),
+                               success: function(layero, index) {
+                                   $.ajax({
+                                       url:"/visitor/getlibraryNewsDetail",
+                                       method:"get",
+                                       dataType:"json",
+                                       data:{id:bookId},
+                                       success:function (data) {
+                                           if(data.data&&data.data.result){
+                                               $(".libNew_dialogTitle").html(data.data.result.title);
+                                               $(".libNew_dialogDate").html(data.data.result.createTime);
+                                               $(".libNew_dialogContent").html(data.data.result.content);
+                                               $(".goBack2").click(function () {
+                                                   layer.closeAll()
+                                               })
+                                           }
+                                       }
+                                   })
+                               },
+                               yes: function(index, layero) {
+                               }
+                           })
+                       })
+                   }else {
+                       libNews.html("暂无数据")
+                   }
+               }else {
+                   libNews.html("暂无数据")
+               }
+            },
+            complete:function () {
+                layer.closeAll('loading')
+            }
+        });
+        $(".goBack").click(function () {
+            history.back()
+        })
+    });
+</script>
+</html>

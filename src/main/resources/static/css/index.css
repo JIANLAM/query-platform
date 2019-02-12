@@ -1,0 +1,293 @@
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td { margin: 0; padding: 0; border: 0; outline: 0; font-size: 100%;  background: transparent; }
+body { line-height: 1; font-family: "SimHei", Microsoft YaHei; }
+ol, ul { list-style: none; }
+table { border-collapse: collapse; border-spacing: 0; }
+a { text-decoration: none; }
+.floatleft { float: left; }
+*{-moz-user-select: none; /*火狐*/
+    -webkit-user-select: none; /*webkit浏览器*/
+    -ms-user-select: none; /*IE10*/
+    -khtml-user-select: none; /*早期浏览器*/
+    user-select: none;}
+.clearfix::before, .clearfix::after { content: "."; display: block; height: 0; line-height: 0; visibility: hidden; clear: both; }
+body,html{width: 100%;height: 100%}
+/*清除浮动*/
+.layui-table td, .layui-table th, .layui-table-col-set, .layui-table-fixed-r, .layui-table-grid-down, .layui-table-header, .layui-table-page, .layui-table-tips-main, .layui-table-tool, .layui-table-total, .layui-table-view, .layui-table[lay-skin=line], .layui-table[lay-skin=row]{
+    border-color: #BFBFBF!important;
+}
+
+/*头部公共样式*/
+.container {width: 100%;height: 100%;background: url("../images/bg.png")no-repeat;background-size: 100% 100%;overflow: hidden}
+.header{width: 100%;height: 10.18%;color: white;text-align: center;position: relative;line-height: 10vh;font-size: 24px}
+.header_title{position: absolute;left: 5%;top: 50%;transform: translateY(-50%);-webkit-transform: translateY(-50%);font-size: 26px;line-height: 26px;
+background: url(../images/intelligentSearch.png)no-repeat;background-size: 40px 38px;background-position:left center;padding-left: 45px }
+.week,.time{margin-left: 1vw}
+.header_user{position: absolute;right: 1.5vw;top:0;height: 100%;font-size: 20px;background: url(../images/user.png)no-repeat;background-size: 44px 44px;
+    background-position:left center;padding-left: 65px}
+.header_user a{color: white}
+.logOut{margin-left: 10px;cursor: pointer}
+.logOut a,.header_title a{color: white}
+td{text-align: center}
+/*首页导航*/
+.nav{width: 57%;margin: 0 auto;margin-top: 12vh}
+.nav_li{width: 29%;margin-left: 5%;float: left;margin-top: 2vh}
+.nav_li a{display: block;width: 100%;height: 100%}
+.nav_li:nth-child(3n+1){margin-left: 0}
+.nav_li a img{width: 100%;display: block}
+
+/*图书查询*/
+.searchBookContent{width: 93%;height:81%;margin: 0 auto;margin-top:5.5vh;background: #EFF4F6;border-radius: 15px;position: relative}
+.back{width:72.5%;margin-left: 115px;margin-top: 120px}
+.back img{width: 128px;display: block;margin: 0 auto}
+.searchBookContent .left{width: 57%;height: 88%;margin-top: 40px;float: left;margin-left: 4vw}
+.left_div{width: 200px;height: 360px;float: left;margin-right: 4vw;line-height: 20px;margin-bottom: 40px;    padding-left: 2vw;}
+/*.left_div:nth-child(3n+1):after{display: block;content:"";width: 580%;height: 4px;background: white;box-shadow: 0 0 15px #c1c4c7;margin-top: 20px;margin-left: -50px}*/
+.left_div:after{display: block;content:"";width: calc(200px + 6vw);height: 4px;background: white;box-shadow: 0 0 15px #c1c4c7;margin-top: 20px;margin-left: -50px}
+
+.bookImg {width: 200px;height:240px;display: block;margin-bottom: 25px;box-shadow: 4px 4px 6px #c1c4c7; }
+.bookTile{font-size: 18px;color: #515151;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;font-weight: 600}
+.author,.bookCount{font-size: 14px;color: #6E6E6E;overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+.inRack{float: right}
+.isbn{font-size: 12px;color: #6e6e6e}
+.isbn .isbnNumber{float: right}
+.searchBookContent .right{width: 30%;float: right;margin-right: 6%;margin-top: 40px}
+.bookSearch{color: #14908B;font-size: 48px;height: 54px;background: url(../images/searchIcon.png)no-repeat;background-size: 53px 54px;background-position:left 40px center;padding-left: 115px;line-height: 54px
+;margin: 70px 0 65px;display: inline-block}
+.inputTextDiv{margin-bottom: 10px}
+.inputTextDiv label{display: inline-block;width:100px;height: 60px;line-height: 60px;color:#393939;font-size: 30px;text-align: right;padding-right: 15px}
+.inputTextDiv input{display: inline-block;width: 70%;height:60px;border: 1px solid #14908B;outline: none;border-radius: 6px;font-size: 24px;box-sizing: border-box;padding-left: 20px;background: #ecf4f6}
+.footer{width:72.5%;height: 68px;margin-top: 80px;margin-left: 115px}
+.footer div{width:171px;height:68px;float: left;cursor: pointer}
+.footer div img{width: 100%}
+.inputTextDiv .submit{float: right}
+.paging.paging2{ color: #525252;font-size: 20px;text-align: left;margin-top: -100px;clear: both;padding-left: 130px;}
+
+/*登录页*/
+.loginContainer{background: url("../images/loginBg.png")no-repeat;}
+.loginContent{width: 870px;height: 510px;border-radius: 20px;margin: 0 auto;margin-top: 20vh;overflow: hidden;position: relative}
+.loginContent div{width: 412px;margin: 0 auto;margin-top:85px}
+.loginContent div:nth-child(2){margin-top: 50px}
+.loginContent input{display: block;width: 412px;height: 64px;outline: none;border: 1px solid #4993A1;border-radius: 6px;box-sizing: border-box;padding-left: 32px;font-size: 30px}
+.loginContent div.loginButton{margin-top:45px;text-align: center;background: #43A9E0;border-radius: 16px;height: 76px;line-height: 76px;cursor: pointer;color: white;font-size: 32px}
+.loginContent input::-webkit-input-placeholder {  color: #747474; font-size: 30px;line-height: 86px }
+.loginContent input:-moz-placeholder {  color:#747474; font-size: 30px ;line-height: 86px}
+.loginContent input::-moz-placeholder {  color:#747474;  font-size: 30px;line-height: 86px}
+.loginContent input:-ms-input-placeholder {  color: #747474;  font-size: 30px;line-height: 86px}
+.loginContent div.loginBack{width: 50px;height: 50px;position: absolute;right: 80px;top:-80px}
+.loginBack img{display: block;width: 100%;height: 100%}
+
+
+/*404*/
+.container2{overflow: hidden;width: 100%}
+.canNot0{font-size:36px;font-family:SourceHanSansCN-Normal;font-weight:bold;color:rgba(97,77,77,1);line-height:19px;position: absolute;left:120px;top:60px}
+.canNot{width: 600px;margin: 0 auto;margin-top: 260px;text-align: center}
+.canNot1{font-size:36px;font-family:SourceHanSansCN-Regular;font-weight:bold;  color:rgba(97,77,77,1);}
+.canNot2{margin-top: 76px;}
+.canNot2 img{display: block;width: 275px;height: 273px;margin: 0 auto}
+.canNot3 a{display: block;margin-top: 78px;text-align: center;font-size: 30px;color: #2779F4}
+.canNot4{position: absolute;left: 0;bottom: 0}
+.canNot4 img{width: 100%;}
+/*查询图书的详情弹框*/
+.bookDetail{padding: 60px;font-size: 20px;position: relative;display: none}
+.closeButton{width: 40px;height: 40px;position: absolute;right: 25px;top:18px;cursor: pointer}
+.closeButton img{width: 100%;height: 100%;display: block}
+.bookDetail_top{position: relative}
+.bookDetail_left{width: 220px;height: 261px;float: left}
+.bookDetail_left img{width: 210px;height: 260px;display: block;box-shadow: 4px 4px 15px #c1c4c7}
+.bookDetail_right{float: left;font-size: 20px;color:#747474;font-family:MicrosoftYaHei;font-weight:400;margin-left: 50px}
+.bookDetail_right1{margin-right: 8px;width: 35%;}
+.bookDetail_title{font-size:30px;color: #393939; font-weight: 700;}
+.bookDetail1{margin-top: 36px}
+.bookDetail2{margin-top: 30px}
+.bookDetail3{margin-top: 60px}
+.collect img{position: absolute;right:25px;bottom: 0;width: 106px;height: 34px}
+.bookDetail_bottom{margin-top: 20px;border-top:3px dashed #E5E5E5}
+.collectList{text-align: center;font-size: 26px;color:#407F4B;margin-top: 30px;margin-bottom: 20px}
+.layui-table-view .layui-table th{text-align: center;color: #6EAD79}
+
+/*我的图书馆*/
+.myContent{width: 1280px;height: 664px;margin: 0 auto;background: white;border-radius: 10px;margin-top: 140px;overflow: hidden;padding: 0 60px;position: relative}
+.myContent_title{text-align: center;font-size: 30px;color: #14908B;margin-top: 46px;}
+.myContent_title span{width: 60px;height: 1px;background: #14908B ;display: inline-block;margin-bottom: 10px;margin-right:20px ;}
+.myContent_title span:nth-child(2){margin-left: 20px}
+.myInfo_title{text-align: center;font-size: 24px;color: #393939;margin: 55px 0 20px}
+.myInfoTable{text-align: center}
+.myInfo_tr {color:#6EAD79 }
+.myInfo_title0{margin-top: 60px}
+.myInfo_title2{color: #747474;font-size: 20px;margin: 20px  0}
+.exit {text-align: center;width: calc(100% - 60px);position: absolute;left: 60px;bottom: 30px}
+.exit  img{width: 83px;height: 34px;display: inline-block}
+.closeButton2{right: 40px}
+/*读者推荐*/
+.readerBookContent{width: 90%;height: 85%;background: #EEF2F6;border-radius:10px;margin: 0 auto;overflow: hidden;margin-top: 25px;box-sizing: border-box;padding: 0 80px;position: relative }
+.readerBookContent_title{margin-top: 10px}
+.readerBookContent_divs{margin-top: 20px;height: 790px;overflow: auto;}
+.readerBookContent_div{width: 33%;float: left;height: 250px;margin-bottom: 16px;position: relative}
+.readerBookImg{width: 200px;height: 240px;float: left; border-top-left-radius: 10px;}
+.readerBookImg img{width: 193px;height: 240px;display: block;box-shadow: 4px 4px 15px #c1c4c7; border-top-left-radius: 10px;}
+.readerBookContents{float: left;color: #6E6E6E;font-size: 18px;width: calc(100% - 200px);}
+.readerBookContents div{margin-bottom: 12px;font-family:SourceHanSansCN-Light;margin-left: 20px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+.readerBookContents div.readerBookContent_title2{color: #515151;margin-top: 15px;margin-bottom: 25px;font-weight:700;}
+.readerBookContent_div:after{display: block;content:"";width: 100%;height: 4px;background: white;box-shadow: 0 0 15px #c1c4c7;margin-top: 248px;margin-left: -50px;clear: both}
+
+.paging{color: #525252;font-size: 20px;text-align: center;  margin-top: 10px;clear: both}
+.paging div{display: inline-block;color: white;border-radius: 5px;text-align: center;padding: 6px 15px;background: #53B6EA;margin-left: 24px;cursor: pointer}
+.go{color: #53B5EA;cursor: pointer}
+.paging div.nextPage{margin-left: 10px}
+#goNum{width: 40px;height: 24px;color: #50B3E8;outline: none;border-radius: 3px;border: 1px solid #656565;padding-left: 5px}
+.rankNum{position: absolute;left: 0;top:0;width: 50px;height: 45px;text-align: center;line-height: 45px;color: white;font-size: 26px}
+.rankNum2{border-top-left-radius: 10px;border-top: 40px solid #51AEC0;border-left: 40px solid #51AEC0;border-right: 40px solid transparent;border-bottom: 40px solid transparent;position: absolute;left: 0;top: 0}
+.goBack{width: 68px;height: 68px;position: absolute;right: 40px;bottom: 17px;cursor: pointer}
+.goBack img{width: 100%;height: 100%;display: block}
+/*最新图书详情弹框*/
+.summary{color: #393939;font-size: 20px;line-height: 30px;clear: both;overflow: hidden}
+.summary div{margin-top: 20px;float: left;width: 80%;height: 85px;overflow: auto;}
+.summary div:nth-child(1){color: #407F4B;font-size: 24px;width: 80px}
+.tabButton{margin-top: 20px}
+.tabButton div{color: #393939;float: left;margin-right: 15px;width: 110px;height: 38px;text-align: center;line-height: 38px;}
+.tabButton div.click{font-size: 20px;color: white;background: #39A1DA;border-radius: 3px}
+.tableData{height: 160px;overflow: auto;margin-bottom: 20px}
+.tableData2{display: none}
+.exit3{bottom: 10px}
+
+/*馆内资讯*/
+.libNewsContent{background: white}
+.libNews{width: 85%;margin: 0 auto;margin-top: 80px;height: 695px;overflow: auto; padding-right: 50px;box-sizing: border-box;padding-bottom: 50px;}
+.libNew{border-bottom: 1px solid  #BFBFBF;height: 230px}
+.libNews_left{float: left;width: 60%;height: 100%;color: #747474;font-size: 24px;box-sizing: border-box;padding-left: 80px;padding-top: 40px}
+.libNews_title{font-size: 30px;color: #2B79C1;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;margin-bottom: 80px}
+.libNewsPic{float: right;width: 260px;height: 160px;margin:40px 70px 0 0;}
+.libNewsPic img{width: 100%;height: 100%;display: block}
+.libNew_title{margin-top: 40px}
+/*馆内资讯详情弹框*/
+.libNew_content{width: 90%;margin: 0 auto;position: relative}
+.libNew_dialogTitle{width: 90%;height: 70px;margin: 0 auto;text-align: center;font-size: 36px;color: #2B79C1;border-bottom: 1px solid #BFBFBF}
+.libNew_dialogDate{text-align: center;margin: 20px 0 40px;font-size: 24px;color: #747474}
+.libNew_dialogContent{height: 510px;overflow: auto;}
+.libNew_dialogContent,.libNew_dialogContent *{color: #393939!important;line-height: 38px!important;font-size: 22px!important;}
+.libNew_dialogContent p {color: #393939!important;line-height: 38px!important;font-size: 22px!important;}
+.libNew_dialogContent img{max-width: 100%}
+.goBack2{width: 68px;height: 68px;position: absolute;right: 45px;bottom: 6px;cursor: pointer}
+.goBack2 img{width: 100%;height: 100%;display: block}
+/*排行榜*/
+.reader_ranking{width: 49%;float: left;margin-top: 30px;}
+.rankingTitle{color: #393939;font-size: 24px;padding-right: 100px;padding-left: 25px;}
+.rankingTitle span{float: right}
+.readRanking{height: 690px;overflow: auto;margin-top: 30px;padding-top: 40px;border-right: 1px dashed #14908B;padding-right: 100px;}
+.readRanking2{border: none}
+.rankingList{;height: 120px;;position: relative;border-bottom: 1px solid #D2D2D2; padding-left: 25px;    padding-top: 15px;}
+.rankingList_pic{width: 88px;height: 101px;float: left}
+.rankingList_pic img{width: 100%;height: 100%;display: block;box-shadow: 4px 4px 15px #c1c4c7}
+.rankingList_right{float: left;margin-left: 15px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width: calc(100% - 15px - 128px)}
+.rankingList_right div{overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+.rankingList_title{color: #515151;font-weight: 600;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;margin-top: 10px;margin-bottom: 20px}
+.ranking_bottom{color: #6E6E6E;font-size: 14px;font-family: SourceHanSansCN-Light;margin-bottom: 8px}
+.book_ranking{float: right}
+.goBack3{width: 56px;height: 56px;position: absolute;right: 20px;bottom: 6px;cursor: pointer}
+.goBack3 img{width: 100%;height: 100%;display: block}
+.readCount{font-size: 24px;color: #515151; position: absolute;right: 22px;top:22px;}
+.rankingNum{position: absolute;left: 25px;top:15px;width: 27px;height: 37px;text-align: center;line-height: 30px;color: white;font-size: 22px;background: url("../images/other.png")no-repeat ;background-size: 28px 37px}
+
+.rankingList:nth-child(1) .readCount{color: #F13670}
+.rankingList:nth-child(2) .readCount{color: #EC6941}
+.rankingList:nth-child(3) .readCount{color: #FFCC00}
+.rankingList:nth-child(1) .rankingNum{background: url("../images/one.png")no-repeat ;}
+.rankingList:nth-child(2) .rankingNum{background: url("../images/two.png")no-repeat ;}
+.rankingList:nth-child(3) .rankingNum{background: url("../images/three.png")no-repeat ;}
+.rankingList_pub{margin-top: 8px}
+
+/*滚动条样式*/
+.readRanking::-webkit-scrollbar {/*滚动条整体样式*/
+    width: 4px;     /*高宽分别对应横竖滚动条的尺寸*/
+    height: 4px;
+}
+.readRanking::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    background: #14908B;
+}
+.readRanking::-webkit-scrollbar-track {/*滚动条里面轨道*/
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    border-radius: 0;
+    background:white;
+}
+.libNew_dialogContent::-webkit-scrollbar {/*滚动条整体样式*/
+    width: 4px;     /*高宽分别对应横竖滚动条的尺寸*/
+    height: 4px;
+}
+.libNew_dialogContent::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    background: #2B79C1;
+}
+.libNew_dialogContent::-webkit-scrollbar-track {/*滚动条里面轨道*/
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    border-radius: 0;
+    background:white;
+}
+
+.centerExit{bottom: 15px}
+ #VirtualKeyboardIME{position: fixed;left: 1300px!important;}
+/*1280*1024*/
+@media  screen and (device-aspect-ratio: 5/4){
+    #VirtualKeyboardIME{position: fixed;left: 600px!important;}
+    /*查询图书*/
+    .left_div{ width: 150px;height: 270px;margin-right: 30px;}
+    .bookImg {width: 150px;height: 180px;}
+    .left_div:after{width: 260px;margin-top: 10px;}
+    .inputTextDiv label{font-size: 20px;width: 80px}
+    .footer div{width: 120px}
+    .footer{margin-left: 100px}
+    .back {margin-left: 100px;margin-top: 60px;}
+    .back img{width: 112px;}
+    .bookDetail_right1{margin-right: 20px}
+    .searchBookContent .left{height: 80%}
+    .searchBookContent .right{margin-top: 10px}
+    .paging.paging2{padding-left: 30px}
+    /*读者推荐*/
+    .readerBookContent_div{height: 200px;margin-bottom: 30px;}
+    .readerBookImg{width: 150px;height: 200px}
+    .readerBookImg img{width: 150px;height: 188px}
+    .readerBookContents{font-size: 12px;width: calc(100% - 150px);}
+    .readerBookContents div.readerBookContent_title2{margin-bottom: 20px}
+    .readerBookContents div {margin-bottom: 8px;margin-left: 10px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+    .readerBookContent_div:after {margin-top: 148px;margin-left: -20px;}
+    .readerBookContent_divs {margin-top: 25px;height: 680px}
+    .readerBookContent_title{margin-top: 20px;}
+    .paging {margin-top: -15px;}
+    /*我的图书馆*/
+    .myContent{width: 1080px}
+    .libNew_dialogTitle{font-size: 26px}
+    .libNew_dialogDate{font-size: 22px;margin-bottom: 30px}
+    .libNew_dialogContent{font-size: 20px!important}
+    .goBack2{width: 58px;height: 58px}
+    .readerBookContent{height: 80.1%}
+    .libNew{height: 210px}
+    .libNewsPic{width: 240px;height: 148px}
+    /*排行榜*/
+    .rankingList{height: 115px}
+    .rankingList:last-child{margin-bottom: 50px}
+    .readRanking{padding-top: 0;margin-top: 20px}
+    .bookDetail_right{margin-left: 15px}
+
+    .bookDetail_left{width: 180px;height: 221px;}
+    .bookDetail_left img {width: 180px;height: 212px;}
+    .bookDetail_title {font-size: 26px}
+    .bookDetail_right{font-size: 18px}
+    .bookDetail1{margin-top: 26px}
+    .summary div{width: 75%}
+    #virtualKeyboard{left: 0!important;top:0px!important;}
+
+
+}
+
+
+
+
+
+/*禁用按钮*/
+.no{color: #d2d2d2!important;cursor: not-allowed!important;border: 1px solid #e2e2e2;background: white!important;pointer-events: none}
+
+/*键盘*/
+.softkeya #virtualKeyboard,.softkeyb #virtualKeyboard{left: 0;top:720px}
+

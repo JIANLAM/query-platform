@@ -1,0 +1,52 @@
+.iframe-box{
+	height: 100%;
+}
+.c4-a9{
+	color: #4A9FF9;
+	line-height: 38px;
+}
+.cff5{
+	color: #FF5A5A;
+}
+.count-cff5{
+	color: #FF5A5A;
+	line-height: 38px;
+	font-size: 20px;
+}
+.c999{
+	color: #999;
+}
+.layui-form-checkbox[lay-skin=primary] span{
+	color: #999;
+}
+.layui-table-page {
+    float: right;
+}
+.mark{
+	margin-top: 10px;
+}
+.mar-t20{
+	margin-top: 20px;
+}
+.layui-badge, .layui-badge-dot, .layui-badge-rim {
+	position: relative;
+	display: inline-block;
+	padding: 0 6px;
+	font-size: 11px;
+	text-align: center;
+	background-color: #FF5722;
+	color: #fff;
+	border-radius: 2px;
+	left: 4px;
+	top: 2px;
+}
+
+.layui-badge-dot {
+	width: 10px;
+	height: 11px;
+	padding: 2px;
+	border-radius: 50%;
+}
+.layui-bg-green{
+	background: #67C23A!important;
+}

@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>读者推荐</title>
+    <link rel="stylesheet" href="../static/layui/css/layui.css">
+    <link rel="stylesheet" href="../static/css/index.css">
+    <link rel="stylesheet" href="../static/css/mynumkb.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header_title"><a href="/index">智能查询系统</a></div>
+            <span class="header_date"></span>
+            <span class="week"></span>
+            <span class="time"></span>
+            <div  th:if="${session==null || session.SPRING_SECURITY_CONTEXT==null}">
+                <div class="header_user">
+                    <a href="user/login">游客:<span class="readCardNumber">请登录</span></a>
+                </div>
+            </div>
+            <div th:if="${session !=null && session.SPRING_SECURITY_CONTEXT !=null}">
+                <div class="header_user">
+                    读者证号:<span class="readCardNumber"
+                               th:text="${session.SPRING_SECURITY_CONTEXT.authentication.principal.remark}">
+                         </span>
+                    <span class="logOut"><a href="/logout">退出</a></span>
+                </div>
+            </div>
+        </div>
+        <div class="readerBookContent" >
+            <div class="myContent_title readerBookContent_title"><span></span>读者推荐<span></span></div>
+            <div class="readerBookContent_divs clearfix">
+            </div>
+            <div class="paging" style="display: none">
+                共<span class="totalNum">0</span>页 当前页：<span class="nowNum">1</span> 到 <input type="text" id="goNum">页 <span class="go"> 跳转</span>
+                <div class="firstPage">首页</div><div class="prevPage">上一页</div><div class="nextPage">下一页</div><div class="lastPage">尾页</div>
+            </div>
+            <div class="goBack">
+                <img src="../static/images/goback.png">
+            </div>
+        </div>
+    </div>
+    <!--详情弹框-->
+    <div class="bookDetail clearfix">
+        <div class="closeButton"><img src="../static/images/close.png" about="关闭"></div>
+        <div class="bookDetail_top clearfix">
+
+        </div>
+        <div class="bookDetail_bottom">
+            <div class="tabButton clearfix">
+                <div class="click">可外借馆藏</div>
+                <div class="">已借出馆藏</div>
+            </div>
+            <div class="tableData" style="height: 200px">
+                <div class="tableData1">
+                    <div id="test0"></div>
+                </div>
+                <div class="tableData1 tableData2">
+                    <div id="test1"></div>
+                </div>
+            </div>
+            <div class="exit exit2" ><img src="../static/images/exit.png"></div>
+        </div>
+    </div>
+</body>
+<script id="list" type="text/html">
+    <div class="readerBookContent_div" id="<%id%>">
+        <div class="readerBookImg"><img src="<%pic?pic:'../static/images/nopic.png'%>"></div>
+        <div class="readerBookContents">
+            <div class="readerBookContent_title2"><%title%></div>
+            <div class="readerBookContent_author">作者:<span><%author%></span></div>
+            <div class="readerBookContent_pub">出版社:<span><%publisher%></span></div>
+            <div class="readerBookContent_price">价格:<span><%price%></span></div>
+            <div class="readerBookContent_isbn">ISBN:<span><%isbn%></span></div>
+            <div class="readerBookContent_count">推荐次数:<span><%recommendedNum%></span></div>
+        </div>
+        <div class="rankNum2"></div>
+        <div class="rankNum"><%index%></div>
+    </div>
+</script>
+<script id="detail" type="text/html">
+    <div class="bookDetail_left"><img src="<%pic?pic:'../static/images/nopic.png'%>"></div>
+    <div class="bookDetail_right bookDetail_right1">
+        <div class="bookDetail_title"><%title%></div>
+        <div class="bookDetail1 bookDetail2">
+            作者：<span class="bookDetail1_author"><%author%></span>
+        </div>
+        <div class="bookDetail1">
+            价格：<span class="bookDetail1_price"><%price%></span>
+        </div>
+        <div class="bookDetail1">
+            当前复本数：<span class="bookDetail1_price"><%dupNum%></span>
+        </div>
+        <div class="bookDetail1">
+            当前所属馆：<span class="bookDetail1_school"><%belongLibrary%></span>
+        </div>
+    </div>
+    <div class="bookDetail_right">
+        <div class="bookDetail1 bookDetail3">
+            出版社：<span class="bookDetail1_pub"><%publisher%></span>
+        </div>
+        <div class="bookDetail1">
+            isbn：<span class="bookDetail1_isbn"><%isbn%></span>
+        </div>
+        <!--<div class="bookDetail1">-->
+        <!--当前馆在架：<span class="bookDetail1_countNumber"><%%></span>-->
+        <!--</div>-->
+
+    </div>
+    <div class="summary clearfix">
+        <div>简介：</div>
+        <div><%summary%></div>
+    </div>
+    <div class="collect"><img src="../static/images/collect.png"></div>
+
+
+</script>
+<script id="noData" type="text/html">
+    <div class="bookDetail_left"><img src="../static/images/nopic.png"></div>
+    <div class="bookDetail_right bookDetail_right1">
+        <div class="bookDetail_title">暂无数据</div>
+        <div class="bookDetail1 bookDetail2">
+            作者：<span class="bookDetail1_author">暂无数据</span>
+        </div>
+        <div class="bookDetail1">
+            价格：<span class="bookDetail1_price">暂无数据</span>
+        </div>
+        <div class="bookDetail1">
+            当前复本数：<span class="bookDetail1_price">暂无数据</span>
+        </div>
+        <div class="bookDetail1">
+            当前所属馆：<span class="bookDetail1_school">暂无数据</span>
+        </div>
+    </div>
+    <div class="bookDetail_right">
+        <div class="bookDetail1 bookDetail3">
+            出版社：<span class="bookDetail1_pub">暂无数据</span>
+        </div>
+        <div class="bookDetail1">
+            isbn：<span class="bookDetail1_isbn">暂无数据</span>
+        </div>
+        <!--<div class="bookDetail1">-->
+        <!--当前馆在架：<span class="bookDetail1_countNumber"><%%></span>-->
+        <!--</div>-->
+
+    </div>
+    <div class="summary clearfix">
+        <div>简介：</div>
+        <div>暂无数据</div>
+    </div>
+</script>
+<script src="../static/js/jquery-1.8.3.js"></script>
+<script src="../static/js/dateTime.js"></script>
+<script src="../static/layui/layui.js"></script>
+<script src="../static/js/tmod.js"></script>
+<script src="../static/js/mynumkb.js"></script>
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+        var totalPages=1;//总页数
+        var currentPages=0;//当前页
+        function getData(obj) {
+            var loading = layer.load(1, {
+                shade: [0.1, '#fff'] //0.1透明度的白色背景
+            });
+            $.ajax({
+                url:"/visitor/userRecommBook",
+                method:"get",
+                dataType:"json",
+//                data:obj,
+                success:function (data) {
+                    console.log(data.code)
+                    if(data.code!=200&&currentPages==0){
+                        $(".prevPage").addClass("no");
+                        $(".nextPage").addClass("no");
+                    }
+                    var readerBookContent_divs=$(".readerBookContent_divs");
+                    readerBookContent_divs.html("");//清空列表
+                    if(data.data){
+                        var result=data.data.result;
+                        totalPages=data.data.totalPages?data.data.totalPages:0;  //总页数
+                        currentPages=data.data.currentPages?data.data.currentPages:0; //当前页
+                        $(".totalNum").html(totalPages);
+                        $(".nowNum").html(currentPages+1);
+                        //  如果是最后页，就禁用下一页
+                        if(currentPages==totalPages-1){
+                            $(".nextPage").addClass("no");
+                        }else {
+                            $(".nextPage").removeClass("no");
+                        }
+//                    如果是第一页，就禁用上一页
+                        if(currentPages==0){
+                            $(".prevPage").addClass("no");
+                        }else {
+                            $(".prevPage").removeClass("no");
+                        }
+                        if(result){
+                            $(result).each(function (i,e) {
+                                result[i].index=i+1;
+                                readerBookContent_divs.append(template("list",result[i]))
+                            })
+                            var readerBookContent_div=$(".readerBookContent_div");
+                            readerBookContent_div.click(function () {
+                                var bookId=$(this).attr("id");
+                                $(".bookDetail_top").html(template("noData"));
+                                //详情
+                                layer.open({
+                                    type: 1,
+                                    title: '',
+                                    shadeClose: true,
+                                    shade: 0.8,
+                                    area: ['80%', '800px'],
+                                    closeBtn: 0,
+                                    content: $('.bookDetail'),
+                                    success: function(layero, index) {
+                                        var closeButton=$(".closeButton, .exit img");
+                                        var tabButton_div=$(".tabButton div");
+                                        tabButton_div.click(function () {
+                                            var index=$(this).index();
+                                            $(this).addClass("click").siblings().removeClass("click");
+                                            $(".tableData1").eq(index).show().siblings().hide()
+                                        });
+                                        closeButton.click(function () {
+                                            layer.closeAll()
+                                        });
+                                        $.ajax({
+                                            url:"/visitor/getBookDetailInfo",
+                                            method:"get",
+                                            dataType:"json",
+                                            data:{bookId:bookId},
+                                            success:function (data) {
+                                                if(data.data&&data.data.result){
+                                                    $(".bookDetail_top").html(template("detail",data.data.result));
+                                                    tabButton_div.eq(0).click();
+                                                    $(".collect img").click(function () {
+                                                        $.ajax({
+                                                            url:"/api/user/addToMyCollection",
+                                                            method:"get",
+                                                            dataType:"json",
+                                                            data:{bookId:bookId},
+                                                            success:function (data) {
+                                                                if(data.code==200){
+                                                                    layer.msg("收藏成功！")
+                                                                }else if(data.code==403){
+                                                                    layer.msg("请先登录再进行收藏操作！")
+                                                                }
+                                                            },
+                                                            error:function (error) {
+                                                                console.log(error)
+                                                                if(error.status==403){
+                                                                    layer.msg("请先登录再进行收藏操作！")
+                                                                }else {
+                                                                    layer.msg("收藏失败，请稍后重试！")
+                                                                }
+                                                            }
+                                                        })
+                                                    })
+                                                    table.render({
+                                                        elem: '#test0'
+                                                        ,height: 157 //固定值
+                                                        ,cols: [
+                                                            [
+                                                                {field:'barcode', title: '条码号'}
+                                                                ,{field:'callNo', title: '索书号'}
+                                                                ,{field:'holdingLocation', title: '所在地点'}
+                                                                ,{field:'statusName',  title: '馆藏状态'}
+                                                                ,{field:'actTypeName', title: '流通类别'}
+                                                                ,{field:'sign', title: '架位'}
+                                                            ]
+                                                        ]
+                                                        ,data:data.data.result.canBorrowHoldingList?data.data.result.canBorrowHoldingList:[]
+                                                    });
+                                                    table.render({
+                                                        elem: '#test1'
+                                                        ,height: 157 //固定值
+                                                        ,cols: [
+                                                            [
+                                                                {field:'barcode', title: '条码号'}
+                                                                ,{field:'callNo', title: '索书号'}
+                                                                ,{field:'holdingLocation', title: '文献所属馆'}
+                                                                ,{field:'actTypeName',  title: '流通类别'}
+                                                                ,{field:'dueBackTime', title: '应还日期'}
+                                                                ,{field:'sign', title: '备注'}
+                                                            ]
+                                                        ]
+                                                        ,data:data.data.result.isAlreadyBorrowHoldingList?data.data.result.isAlreadyBorrowHoldingList:[]
+                                                        , limit: 100//显示的数量
+                                                    });
+                                                }
+                                            },
+                                            error:function () {
+                                                $(".bookDetail_top").html(template("noData"));
+                                                table.render({
+                                                    elem: '#test0'
+                                                    ,height: 157 //固定值
+                                                    ,cols: [
+                                                        [
+                                                            {field:'barcode', title: '条码号'}
+                                                            ,{field:'callNo', title: '索书号'}
+                                                            ,{field:'holdingLocation', title: '所在地点'}
+                                                            ,{field:'statusName',  title: '馆藏状态'}
+                                                            ,{field:'actTypeName', title: '流通类别'}
+                                                            ,{field:'sign', title: '架位'}
+                                                        ]
+                                                    ]
+                                                    ,data:[]
+                                                });
+                                                table.render({
+                                                    elem: '#test1'
+                                                    ,height: 157 //固定值
+                                                    ,cols: [
+                                                        [
+                                                            {field:'barcode', title: '条码号'}
+                                                            ,{field:'callNo', title: '索书号'}
+                                                            ,{field:'holdingLocation', title: '文献所属馆'}
+                                                            ,{field:'actTypeName',  title: '流通类别'}
+                                                            ,{field:'dueBackTime', title: '应还日期'}
+                                                            ,{field:'sign', title: '备注'}
+                                                        ]
+                                                    ]
+                                                    ,data:[]
+                                                    , limit: 100//显示的数量
+                                                });
+                                            }
+                                        })
+                                    },
+                                    yes: function(index, layero) {
+                                    }
+                                })
+                            })
+
+
+                        }else {
+                            readerBookContent_divs.html("暂无数据")
+                        }
+                    }else {
+                        readerBookContent_divs.html("暂无数据")
+                    }
+                },
+                complete:function () {
+                    layer.closeAll('loading')
+                }
+            });
+        }
+        getData({start:0,size:9});//加载数据
+        $(".go").click(function () {
+            if($("#goNum").val()){
+                var val=parseInt($("#goNum").val());
+                if(val<1){
+                    $("#goNum").val("1")
+                }else if(val>totalPages){
+                    $("#goNum").val(totalPages)
+                }else{
+                    $("#goNum").val(val);
+                }
+                getData({start:parseInt($("#goNum").val())-1,size:9}) //跳转数据
+            }else {
+                layer.msg("请先输入想要跳转的页数")
+            }
+        });
+        $(".firstPage").click(function () {
+            getData({start:0,size:9}) //首页数据
+        });
+        $(".lastPage").click(function () {
+            getData({start:totalPages-1,size:9}) //尾页数据
+        });
+        $(".prevPage").click(function () {
+            if(currentPages>0){
+                currentPages-=1;
+                getData({start:currentPages,size:9}) //上一页数据
+            }
+        });
+        $(".nextPage").click(function () {
+            if(currentPages<totalPages){
+                currentPages+=1;
+                getData({start:currentPages,size:9}) //下一页数据
+            }
+        });
+//       返回
+        $(".goBack").click(function () {
+            history.go(-1)
+        });
+
+    });
+
+</script>
+<script>
+    // 数字键盘
+    $("#goNum").click(function () {
+        // $("#softkey,#softkey2").hide();
+        var dv2 = document.getElementById('mykeyboard1');
+        var x2 = 0;
+        var y2 = 0;
+        var l2 = 0;
+        var t2 = 0;
+        var isDown2 = false;
+        //鼠标按下事件
+        dv2.onmousedown = function(e) {
+            //获取x坐标和y坐标
+            x2 = e.clientX;
+            y2 = e.clientY;
+
+            //获取左部和顶部的偏移量
+            l2 = dv2.offsetLeft;
+            t2 = dv2.offsetTop;
+            //开关打开
+            isDown2 = true;
+            //设置样式
+            dv2.style.cursor = 'move';
+        }
+        //鼠标移动
+        window.onmousemove = function(e) {
+            if (isDown2 == false) {
+                return;
+            }
+            //获取x和y
+            var nx = e.clientX;
+            var ny = e.clientY;
+            //计算移动后的左偏移量和顶部的偏移量
+            var nl = nx - (x2- l2);
+            var nt = ny - (y2 - t2);
+
+            dv2.style.left = nl + 'px';
+            dv2.style.top = nt + 'px';
+        }
+        //鼠标抬起事件
+        dv2.onmouseup = function() {
+            //开关关闭
+            isDown2 = false;
+            dv2.style.cursor = 'default';
+        }
+    })
+    $("#goNum").mynumkb();
+</script>
+</html>

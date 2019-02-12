@@ -1,0 +1,251 @@
+@media  screen and (device-aspect-ratio: 16/9){
+	body{
+		background: url(../images/blueLagoon/bj@2x.png) no-repeat;
+		background-size: 100%;
+	}
+	/*按钮定位*/
+	.putaway{
+		position: absolute;
+		right: 223px;
+    	bottom: 293px;
+		z-index: 10;
+	}
+	.cap{
+		position: absolute;
+		left: -20px;
+	    top: -8px;
+	}
+	.sold-out{
+		position: absolute;
+	    right: 117px;
+    	bottom: 236px;
+		z-index: 10;
+	}
+	.search{
+	    position: absolute;
+	    left: 25%;
+    	top: 45%;
+	    z-index: 10;
+	}
+	.return-books{
+	    position: absolute; 
+	    left: 59%;
+    	top: 45%;
+	    z-index: 10;
+	}
+	.renew{
+	    position: absolute;
+        left: 42%;
+    	top: 28%;
+	    z-index: 10;
+	}
+	.logo{
+		position: absolute;
+		left: 3%;
+		top: 5%;
+		z-index: 10;
+	}
+	.logo-img{
+		width: 189px;
+		height: 50px;
+	}
+	/*图片按钮*/
+	.putawayBig{
+		background: url(../images/blueLagoon/putawayMini.png)no-repeat;
+		width: 114px;
+		height: 58px;
+		display: block;
+	}
+	.img-size{
+		width: 347px;
+		height: 166px;
+		display: block;
+	}
+	.sold-out-big{
+	   background: url(../images/blueLagoon/soldOutMini.png)no-repeat;
+	   width: 114px;
+		height: 58px;
+		display: block;
+	}
+	.search-big{
+		background: url(../images/HomebigImg/searchBig.png)no-repeat;
+	}
+	.return-books-big{
+		background: url(../images/HomebigImg/returnBooksBig.png)no-repeat;
+	}
+	.renew-big{
+		background: url(../images/HomebigImg/renewBig.png)no-repeat;
+	}
+	.cap{
+		background: url(../images/HomebigImg/capBig.png)no-repeat;
+		width: 125px;
+		height: 90px;
+		display: block;
+	}
+	
+}
+@media  screen and (min-width:800px) and (max-width:1199px){
+	body{
+		background: url(../images/blueLagoon/800bg.jpg) no-repeat;
+		background-size: 100%;
+	}
+	.img-size{
+		width: 160px;
+		height: 78px;
+		display: block;
+	}
+	.sold-out-big{
+	   background: url(../images/blueLagoon/soldOut.png)no-repeat;
+	}
+	.search-big{
+		background: url(../images/blueLagoon/search.png)no-repeat;
+	}
+	.return-books-big{
+		background: url(../images/blueLagoon/returnBooks.png)no-repeat;
+	}
+	.renew-big{
+		background: url(../images/blueLagoon/renew.png)no-repeat;
+	}
+	.cap{
+		background: url(../images/blueLagoon/cap.png)no-repeat;
+		width: 76px;
+		height: 55px;
+		display: block;
+		position: absolute;
+	    left: -20px;
+    	top: -14px;
+	}
+	.putaway{
+		position: absolute;
+        right: 77px;
+    	bottom: 120px;
+		z-index: 10;
+	}
+	.sold-out{
+		position: absolute;
+        right: 34px;
+    	bottom: 98px;
+		z-index: 10;
+	}
+	.sold-out-big{
+	   background: url(../images/blueLagoon/soldOutMini.png)no-repeat;
+	       width: 57px;
+    height: 37px;
+		background-size: 100% ;
+		display: block;
+	}
+	.putawayBig{
+		background: url(../images/blueLagoon/putawayMini.png)no-repeat;
+	    width: 57px;
+    height: 37px;
+		background-size: 100% ;
+		display: block;
+	}
+	.search{
+		position: absolute;
+	    left: 26%;
+    	top: 48%;
+	    z-index: 10;
+	}
+	.return-books{
+		position: absolute; 
+        left: 61%;
+    	top: 48%;
+	    z-index: 10;
+	}
+	.renew{
+		position: absolute;
+        left: 44%;
+    	top: 37%;
+	    z-index: 10;
+	}
+}
+@media  screen and (device-aspect-ratio: 16/10){
+	body{
+		background: url(../images/blueLagoon/1280bg.jpg) no-repeat;
+		background-size: 100%;
+	}
+	/*按钮定位*/
+	.putaway{
+		position: absolute;
+	    right: 159px;
+    	bottom: 182px;
+		z-index: 10;
+	}
+	.cap{
+		position: absolute;
+        left: -18px;
+    	top: -5px;
+	}
+	.sold-out{
+		position: absolute;
+        right: 89px;
+    	bottom: 145px;
+		z-index: 10;
+	}
+	.search{
+	    position: absolute;
+        left: 26%;
+    	top: 50%;
+	    z-index: 10;
+	}
+	.return-books{
+	    position: absolute; 
+        left: 59%;
+    	top: 50%;
+	    z-index: 10;
+	}
+	.renew{
+	    position: absolute;
+        left: 42%;
+    	top: 33%;
+	    z-index: 10;
+	}
+	.logo{
+		position: absolute;
+		left: 3%;
+		top: 5%;
+		z-index: 10;
+		display: none;
+	}
+	
+	/*图片*/
+	.putawayBig{
+		background: url(../images/blueLagoon/putawayMini.png)no-repeat;
+		width: 85px;
+		height: 50px;
+		background-size: 100% ;
+		display: block;
+	}
+	.img-size{
+		width: 217px;
+		height: 104px;
+		display: block;
+	}
+	.sold-out-big{
+	   background: url(../images/blueLagoon/soldOutMini.png)no-repeat;
+	   width: 85px;
+		height: 50px;
+		background-size: 100% ;
+		display: block;
+	}
+	.search-big{
+		background: url(../images/HomebigImg/searchBig.png)no-repeat;
+		background-size: 100% ;
+	}
+	.return-books-big{
+		background: url(../images/HomebigImg/returnBooksBig.png)no-repeat;
+		background-size: 100% ;
+	}
+	.renew-big{
+		background: url(../images/HomebigImg/renewBig.png)no-repeat;
+		background-size: 100% ;
+	}
+	.cap{
+		background: url(../images/HomebigImg/capBig.png)no-repeat;
+		background-size: 100% ;
+		width: 78px;
+		height: 56px;
+		display: block;
+	}
+}

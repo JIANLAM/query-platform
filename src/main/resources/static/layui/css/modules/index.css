@@ -1,0 +1,90 @@
+.layui-layout-admin .layui-side{
+	top: 84px;
+}
+.layui-layout-admin .layui-header{
+	height: 84px;
+	background-color: #23262E;
+}
+/*.layui-bg-black{
+	background-color: #fff!important;
+}*/
+.layui-body{
+	background: #F7F8FA;
+}
+.margin-t12{
+    margin-top: 12px;
+}
+.margin-r20{
+	margin-right: 30px;
+	color: #fff;
+}
+.margin-r20 span{
+	font-size: 22px;
+}
+.margin-r20 i{
+	font-size: 28px;
+}
+.layui-nav .layui-nav-item a{
+    font-size: 16px;
+    cursor: pointer;
+}
+.layui-nav-tree .layui-nav-child, .layui-nav-tree .layui-nav-child a:hover{
+	color: #909090;
+}
+/*.layui-nav .layui-nav-item:hover{
+	background: none;
+}*/
+/*.layui-nav .layui-nav-item a:hover{
+	color: #909090;
+}*/
+.layui-side-scroll .layui-nav-tree .active{
+	background: #009688;
+	color: #fff;
+    /*border-radius: 50px;*/
+}
+.layui-layout-admin .layui-logo{
+	color: #FFFEFE;
+	font-size: 26px;
+	width: 200px;
+}
+.layui-layout-admin .layui-body{
+	top: 84px;
+	bottom: 0;
+}
+.layui-layout-admin .layui-logo{
+	line-height: 84px;
+}
+.layui-nav .layui-nav-item .cfff{
+	color: #fff;
+}
+.layui-nav .layui-nav-item .cfff:hover{
+	color: #fff;
+}
+/*.layui-layout-admin .layui-footer{
+	background-color: #F7F8FA;
+}*/
+.layui-layout-left {
+    position: absolute!important;
+    left: 227px;
+    top: 0;
+}
+.layui-nav .layui-nav-item{
+    line-height: 84px;
+}
+.layui-nav .tabClick a{
+	font-size: 18px;
+}
+.click a{
+	color: #fff;
+}
+.tab1, .tab2, .tab3, .tab4{display: none}
+iframe {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+.login-out{
+	cursor: pointer;
+	
+}
+

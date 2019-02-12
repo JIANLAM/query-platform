@@ -1,0 +1,339 @@
+@media  screen and (device-aspect-ratio: 16/10){
+	.box{
+		height: 30% !important;	
+	}
+	.tabClick{float: left;margin:25px 20px 10px 0}
+	.tabClick.click{color: red}
+	.tab1{display: none}
+	.holding{overflow: hidden}
+	.table-bordered{
+		font-size: 18px;
+	}
+	.closeBtn {
+	    margin-left: 42%;
+	    margin-top: 25px;
+    }
+    .dialog .holding{
+		font-size: 24px;
+	}
+  .table-content{
+    /*margin-top: 10px;*/
+      height: 230px;
+      overflow-y: auto;
+      width: 99%;
+  }  
+  .table-box {
+  	 height: 380px;
+  	 overflow-y: auto;
+  } 
+  .table-coon{
+  	height: 235px;
+  	overflow-y: auto;
+  }
+  .dialog-box .closeBtn{
+  	margin-left: 43%;
+  }
+  .text-left #brief{
+  	width: 300px;;
+  }
+  #blueLagoon .search-long {
+  	position: absolute;
+    height: 56px;
+    left: 28%;
+    width: 239px;
+    opacity: 0;
+    z-index: 2;
+	}
+  #blueLagoon .search-img{
+	  	position: absolute;
+	    left: 26%;
+		width: 250px;
+		height: 56px;
+	}
+	.form-item .input-style{
+		font-size: 24px;
+	}
+	.dialog-box .brief{
+		font-size: 20px !important;
+		line-height: 32px !important;
+	}
+	.dialog-box .book-name{
+		font-size: 24px;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		display: block;
+		overflow: hidden;
+	}
+	.dialog-box .left-box{
+		width: 320px;
+	}
+	.text-left .brief {
+		font-size: 14px;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		display: block;
+		overflow: hidden;
+	}
+	.text-left .book-name{
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		display: block;
+		overflow: hidden;
+	}
+	.reader-content .book-msg .text-left{
+		width: 325px;
+	}
+	.total{
+		position: absolute;
+	    left: 12%;
+    	bottom: 15%;
+		font-size: 24px;
+		color: #666;
+	}
+	.current-page{
+		position: absolute;
+	    left: 19%;
+    	bottom: 15%;
+		font-size: 24px;
+		color: #666;
+	}
+	.jump-page{
+		position: absolute;
+	    left: 28%;
+    	bottom: 15%;
+		font-size: 24px;
+		color: #666;
+	}
+	.jump-input{
+		width: 53px;
+		height: 24px;
+		background: transparent;
+		border: 2px solid #FFF;
+		border-radius: 5px;
+		text-align: center;
+		color: #fff;
+		outline: 0 none !important;
+	}
+	.jumpterm{
+		position: absolute;
+		left: 38%;
+    	bottom: 14%;
+    	width: 66px;
+    	height: 48px;
+	}
+	/*img{width: 100%;height: 100%;}*/
+	.home{
+		position: absolute;
+	    left: 11.5%;
+    	bottom: 8%;
+	    width: 90px;
+	    height: 55px;
+	}
+	.previous-page{
+		position: absolute;
+        left: 19%;
+    	bottom: 8%;
+	    width: 107px;
+	    height: 57px;
+	}
+	.next-page{
+		position: absolute;
+        left: 28.5%;
+    	bottom: 8%;
+	    width: 107px;
+	    height: 57px;
+	}
+	.trailer-page{
+		position: absolute;
+	    left: 37%;
+    	bottom: 8.5%;
+    	width: 91px;
+    	height: 50px;
+	}
+	.home img, .trailer-page img, .next-page img, .previous-page img, .jump-page img, .jumpterm img{
+		width: 100%;
+		height: 100%;
+	}
+}
+@media  screen and (device-aspect-ratio: 16/9){
+	.box{
+		height: 30% !important;	
+	}
+	.tabClick{float: left;margin:35px 20px 10px 0}
+	.tabClick.click{color: red}
+	.tab1{display: none}
+	.holding{overflow: hidden}
+	.table-bordered{
+		font-size: 30px;
+	}
+	.dialog .dialog-box{
+		width: 70%;
+		left: 15%;
+	}
+	.dialog-box .brief{
+		font-size: 28px !important;
+    	line-height: 46px !important;
+	}
+	.dialog-box .left-box{
+		width: 500px;
+	}
+	.dialog-box .left-box .book-name{
+		font-size: 30px;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		display: block;
+		overflow: hidden;
+	}
+	.dialog-box .message{
+		margin-top: 41px;
+	}
+	.dialog .imgBox1 {
+	    float: left;
+	    margin-right: 20px;
+	    height: 200px;
+	    width: 150px;
+	}
+	.dialog .holding{
+		font-size: 36px;
+	}
+	.reader-content .book-msg{
+		height: 160px;
+	}
+	.reader-content .book-msg  .imgBox{
+		height: 130px;
+		width: 100px;
+	}
+	.reader-content .book-msg .text-left{
+		width: 550px;
+	}
+	.text-left .brief {
+		font-size: 20px;
+		line-height: 31px;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		display: block;
+		overflow: hidden;
+	}
+	.text-left .book-name{
+		font-size: 26px;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		display: block;
+		overflow: hidden;
+	}
+  .table-content{
+    /*margin-top: 10px;*/
+      height: 335px;
+      overflow-y: auto;
+      width: 99%;
+  } 
+  .table-box {
+  	 height: 575px;
+  	 overflow-y: auto;
+  } 
+  .table-coon{
+  	height: 350px;
+  	overflow-y: auto;
+  }
+  .text-left #brief{
+  	width: 500px;;
+  }
+	 #blueLagoon .search-long {
+	    width: 350px;
+	    height: 95px;
+	    position: absolute;
+	    left: 25%;
+	    opacity: 0;
+	    z-index: 2;
+	}
+	 #blueLagoon .search-img{
+		position: absolute;
+		width: 350px;
+		height: 85px;
+	    left: 25%;
+	}
+	.form-item .label-style{
+		font-size: 38px;
+		width: 120px;
+		line-height: 40px;
+		display: inline-block;
+	}
+	.form-box .form-item{
+		margin-bottom: 30px;
+	}
+	.form-item .input-style{
+		height: 60px;
+		font-size: 38px;
+	}
+	.total{
+		position: absolute;
+		left: 13%;
+    	bottom: 15%;
+		font-size: 30px;
+		color: #666;
+	}
+	.current-page{
+		position: absolute;
+		left: 19%;
+    	bottom: 15%;
+		font-size: 30px;
+		color: #666;
+	}
+	.jump-page{
+		position: absolute;
+		left: 27%;
+    	bottom: 15%;
+		font-size: 30px;
+		color: #666;
+	}
+	.jump-input{
+		width: 84px;
+		height: 39px;
+		background: transparent;
+		border: 2px solid #FFF;
+		border-radius: 5px;
+		text-align: center;
+		color: #fff;
+		outline: 0 none !important;
+	}
+	.jumpterm{
+		position: absolute;
+		left: 36%;
+    	bottom: 14%;
+	}
+	.home{
+		position: absolute;
+	    left: 12%;
+	    bottom: 8%;
+	}
+	.previous-page{
+		position: absolute;
+	    left: 19%;
+	    bottom: 8%;
+	}
+	.next-page{
+		position: absolute;
+	    left: 27%;
+	    bottom: 8%;
+	}
+	.trailer-page{
+		position: absolute;
+		left: 35%;
+    	bottom: 8%;
+	}
+	.closeBtn img {
+	    width: 130px;
+	    height: 60px;
+    }
+}
+
+.retrun-book{
+	text-align: center;
+	width: 100%;
+	color: #018ECB;
+	font-size: 26px;
+}
+
+.reader-message{
+	margin-top: 20px;
+}

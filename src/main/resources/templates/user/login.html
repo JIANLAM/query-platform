@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>智能查询系统</title>
+    <link rel="stylesheet" href="../../static/css/index.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/QueryLibraryBook.css"/>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header_title">智能查询系统</div>
+            <span class="header_date"></span>
+            <span class="week"></span>
+            <span class="time"></span>
+            <div  th:if="${session==null || session.SPRING_SECURITY_CONTEXT==null}">
+                <div class="header_user">
+                   游客:<span class="readCardNumber">尚未登录</span>
+                </div>
+            </div>
+            <div th:if="${session !=null && session.SPRING_SECURITY_CONTEXT !=null}">
+                <div class="header_user">
+                    读者证号:<span class="readCardNumber"
+                              th:text="${session.SPRING_SECURITY_CONTEXT.authentication.principal.defaultReaderCard}">
+                         </span>
+                </div>
+            </div>
+
+        </div>
+        <div class="loginContent">
+            <div class="loginBack"><img src="../../static/images/loginBack.png"></div>
+            <form  id="myDataForm" action="#" th:action="@{/login}" method="post">
+            <div>
+                <input  name="username" type="text" onfocus='test()'onBlur="VirtualKeyboard.toggle('username','softkey');"   id="username"  placeholder="读者证号">
+               </div>
+            <div><input  name="password" type="password" placeholder="密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码" id="password" onfocus='test2()' onBlur="VirtualKeyboard.toggle('password','softkey2');">
+               </div>
+            <div id="submit-btn" class="loginButton" >登&nbsp;录</div>
+            </form>
+
+        </div>
+
+    </div>
+    <div id="softkey" class="softkeya"></div>
+    <div id="softkey2" class="softkeyb"></div>
+</body>
+<script src="../../static/js/jquery-1.8.3.js"></script>
+<script src="../../static/js/dateTime.js"></script>
+<script src="../../static/layui/layui.js"></script>
+<script type="text/javascript" src="../../static/js/vk_loader.js?vk_layout=CN%20Chinese%20Simpl.%20Pinyin&vk_skin=flat_gray" ></script>
+
+<script th:inline="javascript">
+    $(function () {
+
+        layui.use(['table', 'element', 'jquery', 'form'], function () {
+
+            var table = layui.table;
+            var $ = layui.jquery;
+            var element = layui.element;
+            var form = layui.form;
+            var authError = [[${param.authError}]];
+            if (authError) {
+                layer.msg('用户名或密码不正确');
+            }
+        $('#submit-btn').on('click', function () {
+            var username = $('.loginContent').find('input[name="username"]').val();
+            if (username.length < 1) {
+                layer.msg("请输入用户名");
+                return false;
+            }
+            var password = $('.loginContent').find('input[name="password"]').val();
+            if (password.length < 1) {
+                layer.msg("请输入密码");
+                return false;
+            }
+            $("#myDataForm").submit();
+            return true;
+        });
+            $(".loginBack").click(function () {
+                location.href="/index"
+            })
+        });
+    });
+
+</script>
+<script>
+    function test(){
+        // $("#softkey,#softkey2").show();
+        $("#mykeyboard1").hide();
+        VirtualKeyboard.toggle('password', 'softkey');
+        if($("#softkey2").hasClass("ZH")){
+            VirtualKeyboard.toggle('username', 'softkey2');
+        }
+        $("#kb_langselector,#kb_mappingselector,#copyrights").css("display", "none");
+        $("#softkey #kb_benter a").click(function () {
+            $("#username").focus();
+            $("#softkey").hide()
+        })
+
+        // 移动键盘
+        //获取元素
+        var dv = document.getElementById('virtualKeyboard');
+        var x = 0;
+        var y = 0;
+        var l = 0;
+        var t = 0;
+        var isDown = false;
+        //鼠标按下事件
+        dv.onmousedown = function(e) {
+            //获取x坐标和y坐标
+            x = e.clientX;
+            y = e.clientY;
+
+            //获取左部和顶部的偏移量
+            l = dv.offsetLeft;
+            t = dv.offsetTop;
+            //开关打开
+            isDown = true;
+            //设置样式
+            dv.style.cursor = 'move';
+        }
+        //鼠标移动
+        window.onmousemove = function(e) {
+            if (isDown == false) {
+                return;
+            }
+            //获取x和y
+            var nx = e.clientX;
+            var ny = e.clientY;
+            //计算移动后的左偏移量和顶部的偏移量
+            var nl = nx - (x - l);
+            var nt = ny - (y - t);
+
+            dv.style.left = nl + 'px';
+            dv.style.top = nt + 'px';
+        }
+        //鼠标抬起事件
+        dv.onmouseup = function() {
+            //开关关闭
+            isDown = false;
+            dv.style.cursor = 'default';
+        }
+        // 点击其他地方隐藏
+        // $("body").click(function (e) {
+        //
+        //     if($("#softkey").text()!=""&&e.target.attr("id")!="bookTitle"){
+        //         VirtualKeyboard.toggle('bookTitle', 'softkey');
+        //     }
+        //     if($("#softkey2").text()!=""&&e.target.attr("id")!="bookAuthor"){
+        //         VirtualKeyboard.toggle('bookAuthor', 'softkey2');
+        //     }
+        // });
+    }
+    function test2(){
+        // $("#softkey,#softkey2").show();
+        $("#mykeyboard1").hide();
+        VirtualKeyboard.toggle('username', 'softkey2');
+        if($("#softkey").hasClass("ZH")){
+            VirtualKeyboard.toggle('password', 'softkey');
+        }
+        // 移动键盘
+        // 获取元素
+        var dv = document.getElementById('virtualKeyboard');
+        var x = 0;
+        var y = 0;
+        var l = 0;
+        var t = 0;
+        var isDown = false;
+        //鼠标按下事件
+        dv.onmousedown = function(e) {
+            //获取x坐标和y坐标
+            x = e.clientX;
+            y = e.clientY;
+
+            //获取左部和顶部的偏移量
+            l = dv.offsetLeft;
+            t = dv.offsetTop;
+            //开关打开
+            isDown = true;
+            //设置样式
+            dv.style.cursor = 'move';
+        }
+        //鼠标移动
+        window.onmousemove = function(e) {
+            if (isDown == false) {
+                return;
+            }
+            //获取x和y
+            var nx = e.clientX;
+            var ny = e.clientY;
+            //计算移动后的左偏移量和顶部的偏移量
+            var nl = nx - (x - l);
+            var nt = ny - (y - t);
+
+            dv.style.left = nl + 'px';
+            dv.style.top = nt + 'px';
+        }
+        //鼠标抬起事件
+        dv.onmouseup = function() {
+            //开关关闭
+            isDown = false;
+            dv.style.cursor = 'default';
+        }
+        $("#kb_langselector,#kb_mappingselector,#copyrights").css("display", "none");
+    }
+</script>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link rel="stylesheet" href="../static/css/index.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header_title">智能查询系统
+                <div th:if="${session !=null && session.SPRING_SECURITY_CONTEXT !=null}">
+                    <div id="libraryName" th:text="${session.SPRING_SECURITY_CONTEXT.authentication.principal.createName}"></div>
+                </div>
+            </div>
+            <span class="header_date"></span>
+            <span class="week"></span>
+            <span class="time"></span>
+            <div  th:if="${session==null || session.SPRING_SECURITY_CONTEXT==null}">
+                <div class="header_user">
+                    <a href="user/login">游客:<span class="readCardNumber">请登录</span></a>
+                </div>
+            </div>
+            <div th:if="${session !=null && session.SPRING_SECURITY_CONTEXT !=null}">
+                <div class="header_user">
+                    读者证号:<span class="readCardNumber"
+                               th:text="${session.SPRING_SECURITY_CONTEXT.authentication.principal.remark}">
+                         </span>
+                    <span class="logOut"><a href="/logout">退出</a></span>
+                </div>
+            </div>
+        </div>
+        <div class="nav">
+            <div class="nav_li">
+                <a href="/searchBook"><img src="../static/images/searchBook.png" alt="查询图书"></a>
+            </div>
+            <div class="nav_li">
+                <a href="/readerRecommendation"><img src="../static/images/readerRecommendation.png" alt="读者推荐"></a>
+            </div>
+            <div class="nav_li">
+                <a href="/newBook"><img src="../static/images/newBook.png" alt="最新图书"></a>
+            </div>
+            <div class="nav_li">
+                <a href="/user/center"><img src="../static/images/myLibrary.png" alt="我的图书馆"></a>
+            </div>
+            <div class="nav_li">
+                <a href="/libraryInformation"><img src="../static/images/libraryInformation.png" alt="馆内资讯"></a>
+            </div>
+            <div class="nav_li">
+                <a href="/ranking"><img src="../static/images/ranking.png" alt="排行榜"></a>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../static/js/jquery-1.8.3.js"></script>
+<script src="../static/js/dateTime.js"></script>
+</html>

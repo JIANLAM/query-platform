@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>排行榜</title>
+    <link rel="stylesheet" href="../static/layui/css/layui.css">
+    <link rel="stylesheet" href="../static/css/index.css">
+    <style>
+        .loading{      background: url(../static/layui/css/modules/layer/default/loading-1.gif) no-repeat;background-position: center center
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header_title"><a href="/index">智能查询系统</a></div>
+            <span class="header_date"></span>
+            <span class="week"></span>
+            <span class="time"></span>
+            <div  th:if="${session==null || session.SPRING_SECURITY_CONTEXT==null}">
+                <div class="header_user">
+                    <a href="user/login">游客:<span class="readCardNumber">请登录</span></a>
+                </div>
+            </div>
+            <div th:if="${session !=null && session.SPRING_SECURITY_CONTEXT !=null}">
+                <div class="header_user">
+                    读者证号:<span class="readCardNumber"
+                               th:text="${session.SPRING_SECURITY_CONTEXT.authentication.principal.remark}">
+                         </span>
+                    <span class="logOut"><a href="/logout">退出</a></span>
+                </div>
+            </div>
+        </div>
+        <div class="readerBookContent libNewsContent">
+            <div class="myContent_title ranking_title"><span></span>排行榜<span></span></div>
+            <div class="reader_ranking">
+                <div class="rankingTitle">读者借阅排行榜<span>借阅次数</span></div>
+                <div class="readRanking readRanking1">
+                </div>
+
+            </div>
+            <div class="reader_ranking book_ranking">
+                <div class="rankingTitle">图书借阅排行榜<span>借阅次数</span></div>
+                <div class="readRanking readRanking2">
+                </div>
+            </div>
+
+            <div class="goBack3">
+                <img src="../static/images/goback.png">
+            </div>
+        </div>
+    </div>
+    <!--详情弹框-->
+    <div class="bookDetail clearfix">
+        <div class="libNew_content">
+            <div class="libNew_dialogTitle"></div>
+            <div class="libNew_dialogDate"></div>
+            <div class="libNew_dialogContent">
+
+            </div>
+        </div>
+        <div class="goBack2">
+            <img src="../static/images/goback.png">
+        </div>
+    </div>
+</body>
+<script id="reader_list" type="text/html">
+    <div class="rankingList ">
+        <div class="rankingList_pic"> <img src="<%readerInfoDTO.icon?readerInfoDTO.icon:'../static/images/noIcon.png'%>" alt="读者头像"></div>
+        <div class="rankingList_right">
+            <div class="rankingList_title">姓名：<span><%readerInfoDTO.readerName%></span></div>
+            <div class="rankingList_author">年级：<span><%readerInfoDTO.gradeName%></span></div>
+            <div class="rankingList_pub">类型：<span><%readerInfoDTO.readerTypeName%></span></div>
+            <div class="readCount"><%lendCount%></div>
+        </div>
+        <div class="rankingNum"><%index%></div>
+    </div>
+</script>
+<script id="book_list" type="text/html">
+    <div class="rankingList">
+        <div class="rankingList_pic"> <img src="<%pic?pic:'../static/images/nopic.png'%>" alt="图书封面"></div>
+        <div class="rankingList_right">
+            <div class="rankingList_title"><%title%></div>
+            <div class="rankingList_author">作者：<span><%author%></span></div>
+            <div class="rankingList_pub">索书号：<span><%callNo%></span></div>
+            <div class="readCount"><%lendCount%></div>
+        </div>
+        <div class="rankingNum"><%index%></div>
+    </div>
+</script>
+
+<script src="../static/js/jquery-1.8.3.js"></script>
+<script src="../static/js/dateTime.js"></script>
+<script src="../static/layui/layui.js"></script>
+<script src="../static/js/tmod.js"></script>
+<script>
+    layui.use('table', function(){
+        $(".readRanking1").addClass("loading");
+        $(".readRanking2").addClass("loading");
+        $.ajax({
+            url:"/visitor/rankingListOfReader",
+            method:"get",
+            dataType:"json",
+            success:function (data) {
+                if(data.data){
+                    var result=data.data.result;
+
+                    if(result){
+                        var num=0;
+                        $(result).each(function (i,e) {
+                            if(result[i].readerInfoDTO){
+                                num+=1
+                                result[i].index=num;
+                                $(".readRanking1").append(template("reader_list",result[i]));
+                            }
+                        })
+                    }else {
+                        $(".readRanking1").html("暂无数据")
+                    }
+                }else {
+                    $(".readRanking1").html("暂无数据")
+                }
+            },
+            complete:function () {
+                $(".readRanking1").removeClass("loading");
+            }
+        });
+        $.ajax({
+            url:"/visitor/rankingListOfBook",
+            method:"get",
+            dataType:"json",
+            success:function (data) {
+                if(data.data){
+                    var result=data.data.result;
+                    if(result){
+                        $(result).each(function (i,e) {
+                            result[i].index=i+1;
+                            $(".readRanking2").append(template("book_list",result[i]));
+                        })
+                    }else {
+                        $(".readRanking2").html("暂无数据")
+                    }
+                }else {
+                    $(".readRanking2").html("暂无数据")
+                }
+            },
+            complete:function () {
+                $(".readRanking2").removeClass("loading");
+            }
+        });
+        var goBack3=$(".goBack3");
+        goBack3.click(function () {
+            history.go(-1)
+        });
+    })
+
+
+</script>
+</html>
