@@ -1,8 +1,8 @@
 package com.zt.queryplatform.service.impl;
 
 import com.zt.queryplatform.entity.*;
-import com.zt.queryplatform.entity.dto.BookDTO;
 import com.zt.queryplatform.entity.dto.LendDTO;
+import com.zt.queryplatform.entity.dto.LendOrderDTO;
 import com.zt.queryplatform.entity.dto.ReaderInfoDTO;
 import com.zt.queryplatform.repository.*;
 import com.zt.queryplatform.service.LendService;
@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.lang.reflect.Constructor;
 import java.util.*;
 
 /**
@@ -21,35 +22,36 @@ import java.util.*;
 @Service
 public class LendServiceImpl implements LendService {
 
-    @Autowired
-    private ReaderRepository readerRepository;
+    private final ReaderRepository readerRepository;
+
+    private final ReadercardRepository readercardRepository;
+
+    private final RuleRepository ruleRepository;
+
+    private final LendRepository lendRepository;
+
+    private final ModelMapper modelMapper;
+
+    private final HoldingRepository holdingRepository;
+
+    private final BookRepository bookRepository;
+
+    private final PeopleRepository peopleRepository;
+
+    private final GradeRepository gradeRepository;
 
     @Autowired
-    private ReadercardRepository readercardRepository;
-
-    @Autowired
-    private RuleRepository ruleRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private LendRepository lendRepository;
-
-    @Autowired
-    private ModelMapper modelMapper;
-
-    @Autowired
-    private HoldingRepository holdingRepository;
-
-    @Autowired
-    private BookRepository bookRepository;
-
-    @Autowired
-    private PeopleRepository peopleRepository;
-
-    @Autowired
-    private  GradeRepository gradeRepository;
+    public LendServiceImpl(ReaderRepository readerRepository, ReadercardRepository readercardRepository, RuleRepository ruleRepository, LendRepository lendRepository, ModelMapper modelMapper, HoldingRepository holdingRepository, BookRepository bookRepository, PeopleRepository peopleRepository, GradeRepository gradeRepository) {
+        this.readerRepository = readerRepository;
+        this.readercardRepository = readercardRepository;
+        this.ruleRepository = ruleRepository;
+        this.lendRepository = lendRepository;
+        this.modelMapper = modelMapper;
+        this.holdingRepository = holdingRepository;
+        this.bookRepository = bookRepository;
+        this.peopleRepository = peopleRepository;
+        this.gradeRepository = gradeRepository;
+    }
 
 
     @Override
@@ -75,53 +77,37 @@ public class LendServiceImpl implements LendService {
     }
 
     @Override
-    public ServiceMultiResult<BookDTO> getRankingListOfBook(Long libraryId) {
-        List<Map<String, Long>> lendList = lendRepository.findLendListForHolding(libraryId);
-        List<LendDTO> lendDTOList = new ArrayList<>();
+    public ServiceMultiResult<LendOrderDTO> getRankingListOfBook(Long libraryId){
+        List<Object[]> objects = lendRepository.findLendListForHolding(libraryId);
 
-        lendList.forEach(map -> {
-            LendDTO lendDTO = new LendDTO();
-            lendDTO.setHoldingId(map.get("holdingId"));
-            //获取馆藏
-            Holding holding = holdingRepository.findHoldingById(lendDTO.getHoldingId());
-            //填充图书信息
-            if(holding!=null){
-                Book  book = bookRepository.findOne(holding.getBookId());
-                lendDTO.setBook(book);
-                //填充借阅次数
-                int lendCount = lendRepository.countByHoldingIdAndLendLibId(lendDTO.getHoldingId(), libraryId);
-
-                lendDTO.setLendCount(lendCount);
-                lendDTOList.add(lendDTO);
-            }
-        });
-
-        Map<Long, Integer> map = asynTheSameBookCount(lendDTOList);
-        List<BookDTO> bookDTOList = new ArrayList<>();
-        //fixme 待完善 过滤掉多余的书本
-        map.forEach((aLong, integer) ->{
-            Book book = bookRepository.findOne(aLong);
-            BookDTO bookDTO = modelMapper.map(book,BookDTO.class);
-            bookDTO.setLendCount(map.get(aLong));
-            bookDTOList.add(bookDTO);
-        });
-        List<BookDTO> bdl = fixLendListOrderByLendCountforReader(bookDTOList);
-        return new ServiceMultiResult<>(bdl.size(),bdl);
+        List<LendOrderDTO> list = new ArrayList<>(16);
+        try {
+            list = transformEntity(objects, LendOrderDTO.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (list == null){
+            return new ServiceMultiResult<>(0,new ArrayList<>());
+        }
+        return new ServiceMultiResult<>(list.size(),list);
     }
 
-    private Map<Long,Integer> asynTheSameBookCount(List<LendDTO> lendDTOList ){
-        Map<Long,Integer> map = new HashMap<>();
-        lendDTOList.forEach(lendDTO -> {
-            Long id = lendDTO.getBook().getId();
-            Integer lendCount = lendDTO.getLendCount();
-           if(map.containsKey(id)){
-              map.put(id,map.get(id)+lendCount);
-            }else{
-               map.put(id,lendCount);
-           }
-        });
-        return map;
+    //转换实体类
+    private  <T>  List<T> transformEntity(List<Object[]> list, Class<T> clazz) throws Exception {
+        List<T> returnList = new ArrayList<T>();
+        Object[] co = list.get(0);
+        Class[] c2 = new Class[co.length];
+        //确定构造方法
+        for (int i = 0; i < co.length; i++) {
+            c2[i] = co[i].getClass();
+        }
+        for (Object[] o : list) {
+            Constructor<T> constructor = clazz.getConstructor(c2);
+            returnList.add(constructor.newInstance(o));
+        }
+        return returnList;
     }
+
 
     @Override
     public ServiceMultiResult<LendDTO> getRankingListOfReader(Long libraryId) {
@@ -140,11 +126,15 @@ public class LendServiceImpl implements LendService {
         });
         List<LendDTO> ldl = fixLendListOrderByLendCount(lendDTOList);
 
+
+        if (ldl == null){
+            return new ServiceMultiResult<>(0,new ArrayList<>());
+        }
         //填充数据
         ldl.forEach(lendDTO -> {
             Reader reader = readerRepository.findOne(lendDTO.getReaderId());
             if(reader != null){
-                ReaderInfoDTO readerInfoDTO = modelMapper.map(reader,ReaderInfoDTO.class);
+                ReaderInfoDTO readerInfoDTO = modelMapper.map(reader, ReaderInfoDTO.class);
                 People people = peopleRepository.findOne(reader.getPeopleId());
                 ReaderCard readerCard = readercardRepository.findOne(Long.valueOf(reader.getReaderType()));
                 if(reader.getGrade()!=null){
@@ -166,32 +156,9 @@ public class LendServiceImpl implements LendService {
     }
 
 
-    //校正顺序 - 根据图书借阅次数
-    private  List<BookDTO>  fixLendListOrderByLendCountforReader(List<BookDTO> list){
-
-        List<BookDTO> bookDTOList = new ArrayList<>();
-        if(list.size()==0 || list.isEmpty()){
-            return null;
-        }
-        //fixme 对于借阅的内容进行排序
-        Collections.sort(list, new Comparator<BookDTO>() {
-            @Override
-            public int compare(BookDTO o1, BookDTO o2) {
-                return o2.getLendCount() - o1.getLendCount();
-            }
-        });
-
-        int count = 0;
-        for (BookDTO bookDTO : list) {
-            bookDTOList.add(bookDTO);
-            count ++;
-            if(count>=20){
-                break;
-            }
-        }
-        return bookDTOList;
-    }
-    //校正顺序 - 根据读者借阅次数
+    /**
+     *  校正顺序 - 根据读者借阅次数
+     */
     private  List<LendDTO>  fixLendListOrderByLendCount(List<LendDTO> list){
 
         List<LendDTO> lendDTOList = new ArrayList<>();
@@ -206,7 +173,6 @@ public class LendServiceImpl implements LendService {
                 return o2.getLendCount() - o1.getLendCount();
             }
         });
-
         int count = 0;
         for (LendDTO lendDTO : list) {
             lendDTOList.add(lendDTO);

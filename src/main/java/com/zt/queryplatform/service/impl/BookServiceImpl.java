@@ -1,7 +1,5 @@
 package com.zt.queryplatform.service.impl;
 
-import com.zt.queryplatform.base.BorrowBookStatus;
-import com.zt.queryplatform.base.HoldingStatus;
 import com.zt.queryplatform.entity.*;
 import com.zt.queryplatform.entity.dto.BookDTO;
 import com.zt.queryplatform.entity.dto.HoldingDTO;
@@ -52,8 +50,8 @@ public class BookServiceImpl implements BookService {
     private LendRepository lendRepository;
 
     @Override
-    public ServiceMultiResult<BookDTO> queryBookList(Book book,Pageable pageable) {
-        Page<Book> list = bookRepository.findAll(new Specification<Book>() {
+    public ServiceMultiResult<BookDTO> queryBookList(Book book, Pageable pageable, int start) {
+        Page<Book> pageList = bookRepository.findAll(new Specification<Book>() {
             @Override
             public Predicate toPredicate(Root<Book> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder cb) {
                 List<Predicate> predicates = new ArrayList<>();
@@ -77,11 +75,8 @@ public class BookServiceImpl implements BookService {
                 return cb.and(predicates.toArray(pre));
             }
         },pageable);
-        List<BookDTO> bookList = new ArrayList<>();
-
-        list.forEach(b -> bookList.add(modelMapper.map(b,BookDTO.class)));
-
-        return new ServiceMultiResult<>(list.getTotalElements(),bookList);
+        List<BookDTO> bookList = warpMyPageBook(pageList, book.getOwnlib());
+        return new ServiceMultiResult<>(pageList.getTotalElements(),pageList.getTotalPages(),start,bookList);
     }
 
 
@@ -94,16 +89,21 @@ public class BookServiceImpl implements BookService {
 
         Page<Book> bookPage = bookRepository.findAllByOwnlib(libraryId, pageable);
         int totalPages = bookPage.getTotalPages();
+        List<BookDTO> bookList = warpMyPageBook(bookPage, libraryId);
+
+        return new ServiceMultiResult<>(bookPage.getTotalElements(),totalPages,start,bookList);
+    }
+
+    private List<BookDTO> warpMyPageBook(Page<Book> pageList, Long libraryId){
 
         List<BookDTO> bookList = new ArrayList<>();
-
-        bookPage.forEach(book -> {
-            BookDTO bookDTO = modelMapper.map(book,BookDTO.class);
+        pageList.forEach(book -> {
+            BookDTO bookDTO = modelMapper.map(book, BookDTO.class);
             List<Holding> holdingList = holdingRepository.findAllByOwnlibAndBookId(libraryId, bookDTO.getId());
             //全部可借馆藏列表
             List<HoldingDTO> canBorrowHoldingList = new ArrayList<>();
             holdingList.forEach(holding -> {
-                HoldingDTO holdingDTO  = modelMapper.map(holding,HoldingDTO.class);
+                HoldingDTO holdingDTO  = modelMapper.map(holding, HoldingDTO.class);
                 if(holding.getStatus() == 0){
                     canBorrowHoldingList.add(holdingDTO);
                 }
@@ -113,15 +113,14 @@ public class BookServiceImpl implements BookService {
             bookList.add(bookDTO);
 
         });
-
-        return new ServiceMultiResult<>(bookPage.getTotalElements(),totalPages,start,bookList);
+        return bookList;
     }
 
     @Override
     public ServiceResult<BookDTO> getBookInfoDetail(Long libraryId, Long bookId) {
 
         Book book = bookRepository.findOne(bookId);
-        BookDTO bookDTO = modelMapper.map(book,BookDTO.class);
+        BookDTO bookDTO = modelMapper.map(book, BookDTO.class);
         if(book == null){
             return ServiceResult.notFound();
         }
@@ -137,10 +136,10 @@ public class BookServiceImpl implements BookService {
         List<HoldingDTO> isAlreadyBorrowHoldingList = new ArrayList<>();
         //装饰一下馆藏
         holdingList.forEach(holding -> {
-            HoldingDTO hd = modelMapper.map(holding,HoldingDTO.class);
+            HoldingDTO hd = modelMapper.map(holding, HoldingDTO.class);
             if(hd.getColladdressId()>0){
-                SysBasicParam   s = sysBasicParamRespository.getSysBasicParamById(Long.valueOf(hd.getActType()));
-                SysBasicParam    s1 = sysBasicParamRespository.getSysBasicParamById(hd.getColladdressId());
+                SysBasicParam s = sysBasicParamRespository.getSysBasicParamById(Long.valueOf(hd.getActType()));
+                SysBasicParam s1 = sysBasicParamRespository.getSysBasicParamById(hd.getColladdressId());
                 if(s1 != null){
                     hd.setHoldingLocation(s1.getLabel());
                 }

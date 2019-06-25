@@ -13,7 +13,7 @@ import org.springframework.data.domain.Pageable;
 public interface BookService {
 
     //查询图书
-    ServiceMultiResult<BookDTO> queryBookList(Book book, Pageable pageable);
+    ServiceMultiResult<BookDTO> queryBookList(Book book, Pageable pageable,int start);
 
 
     //获取图书列表
